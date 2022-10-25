@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1024240461306",
+    "project_id": "whom2play",
+    "storage_bucket": "whom2play.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024240461306:android:f818d505cdeadd5b747043",
+        "android_client_info": {
+          "package_name": "com.sebqv97.whom2play"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1024240461306-kieg4t6okhd3nak0480a3vr87ei3urjl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sebqv97.whom2play",
+            "certificate_hash": "e2cd6d63e15526c231c352cdc7cf99b622a80a01"
+          }
+        },
+        {
+          "client_id": "1024240461306-v4dbq9l7gqrdihkprn6npcai2335feu6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0E8DRK2R3XqhSa8bE2C2hKd9_alOZ6PM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1024240461306-v4dbq9l7gqrdihkprn6npcai2335feu6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
