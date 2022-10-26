@@ -6,9 +6,16 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
 
-    suspend fun createUser(auth: User): Flow<Resource<String>>
+    suspend fun createUser(auth: User): Flow<Resource<Boolean>>
 
-    suspend fun loginUser(auth: User): Flow<Resource<String>>
+    suspend fun loginUser(auth: User): Flow<Resource<Boolean>>
 
+    suspend fun logoutUser():Flow<Resource<Boolean>>
+
+     fun isUserLoggedIn():Boolean
+
+    fun getFirebaseAuthState():Flow<Boolean>
+
+     fun addUserIntoDb(user:User):Boolean
 
 }

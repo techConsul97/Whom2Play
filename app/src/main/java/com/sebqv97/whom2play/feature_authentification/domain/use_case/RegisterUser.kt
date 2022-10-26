@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class RegisterUserUseCase @Inject constructor(
+class RegisterUser @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    suspend fun registerUser(email: String?, password: String?): Flow<Resource<String>> = flow {
+    suspend operator fun invoke(email: String?, password: String?): Flow<Resource<Boolean>> = flow {
         if (AuthDataValidator.isEmailValid(email) && AuthDataValidator.isValidPassword(password)) {
             val user = User(email!!, password!!)
 
@@ -19,7 +19,7 @@ class RegisterUserUseCase @Inject constructor(
                 when (it) {
                     is Resource.Loading -> emit(Resource.Loading())
                     is Resource.Error -> emit(Resource.Error(it.message!!))
-                    is Resource.Success -> emit(Resource.Success(it.data!!))
+                    is Resource.Success -> emit(Resource.Success(true))
                 }
 
             }

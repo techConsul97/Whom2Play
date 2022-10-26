@@ -6,16 +6,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sebqv97.whom2play.common.util.Resource
-import com.sebqv97.whom2play.feature_authentification.domain.use_case.LoginUserUseCase
-import com.sebqv97.whom2play.feature_authentification.domain.use_case.RegisterUserUseCase
+import com.sebqv97.whom2play.feature_authentification.domain.use_case.LoginUser
+import com.sebqv97.whom2play.feature_authentification.domain.use_case.RegisterUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val registerUserUseCase: RegisterUserUseCase,
-    private val loginUserUseCase: LoginUserUseCase
+    private val registerUserUseCase: RegisterUser,
+    private val loginUserUseCase: LoginUser,
 ):ViewModel(){
 
 
@@ -25,7 +25,7 @@ class AuthViewModel @Inject constructor(
     
     fun signUserIn(email:String?, password:String?){
         viewModelScope.launch { 
-            loginUserUseCase.loginUser(email, password).collect{
+            loginUserUseCase(email, password).collect{
                 when(it){
                     is Resource.Loading -> _authState.value = AuthState(isLoading = true)
                     is Resource.Error -> _authState.value = AuthState(error = it.message)
@@ -37,7 +37,7 @@ class AuthViewModel @Inject constructor(
 
     fun registerUser(email: String?,password: String?){
         viewModelScope.launch {
-            registerUserUseCase.registerUser(email, password).collect{
+            registerUserUseCase(email, password).collect{
                 when(it){
                     is Resource.Loading -> _authState.value = AuthState(isLoading = true)
                     is Resource.Error -> _authState.value = AuthState(error = it.message)
@@ -46,4 +46,6 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
+
+
 }

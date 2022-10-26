@@ -6,12 +6,21 @@ data class User(
     val userName:String="",
     val contactNumber:String="",
     val preferredSports: Sports = Sports.Jogging,
-    val address:String?=""
+    val address:String=""
 
 ){
    enum class Sports{
         Jogging, Football, Tennis, PingPong, Chess, Backgammon
     }
+
+    fun getDetailsIntoHashMap():HashMap<String,String> = hashMapOf(
+        "email" to email,
+        "password" to password,
+        "username" to userName,
+        "phone" to contactNumber,
+        "sports" to listOf(preferredSports).toString(),
+        "address" to address
+    )
 }
 
 

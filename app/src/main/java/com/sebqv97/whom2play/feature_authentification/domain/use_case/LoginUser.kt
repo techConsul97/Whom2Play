@@ -6,13 +6,12 @@ import com.sebqv97.whom2play.feature_authentification.domain.repository.AuthRepo
 import com.sebqv97.whom2play.feature_authentification.util.AuthDataValidator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class LoginUserUseCase @Inject constructor(
+class LoginUser @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-   suspend fun loginUser(email: String?, password: String?): Flow<Resource<User>> = flow {
+   suspend operator fun invoke(email: String?, password: String?): Flow<Resource<User>> = flow {
         if (AuthDataValidator.isEmailValid(email) && AuthDataValidator.isValidPassword(password)) {
             val user = User(email!!, password!!)
             authRepository.loginUser(user).collect {
