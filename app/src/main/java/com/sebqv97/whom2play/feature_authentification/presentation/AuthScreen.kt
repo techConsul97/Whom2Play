@@ -8,6 +8,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun AuthScreen(modifier: Modifier = Modifier, viewModel: AuthViewModel = viewModel()) {
-    viewModel.registerUser("sebastian.leonti@gmail.com","Afdsf123s")
+     viewModel.registerUser("sebastian.ldseoti@gmail.com","Afdsf123s")
     val authState by viewModel.authState
 }

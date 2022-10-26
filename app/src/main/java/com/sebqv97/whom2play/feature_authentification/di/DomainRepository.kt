@@ -9,21 +9,18 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(ViewModelComponent::class)
 object DomainRepository {
 
     @Provides
-
     fun provideAuthRepository(firebaseAuth: FirebaseAuth):AuthRepository = AuthRepositoryImpl(firebaseAuth)
 
     @Provides
     fun provideLoginUseCase(authRepository: AuthRepository):LoginUserUseCase = LoginUserUseCase(authRepository)
 
     @Provides
-    fun provideRegisterUseCase(authRepository: AuthRepository,loginUserUseCase: LoginUserUseCase) = RegisterUserUseCase(authRepository,loginUserUseCase)
+    fun provideRegisterUseCase(authRepository: AuthRepository) = RegisterUserUseCase(authRepository)
 
 }

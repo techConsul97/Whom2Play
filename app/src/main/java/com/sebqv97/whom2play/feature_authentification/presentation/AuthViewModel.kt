@@ -41,7 +41,7 @@ class AuthViewModel @Inject constructor(
                 when(it){
                     is Resource.Loading -> _authState.value = AuthState(isLoading = true)
                     is Resource.Error -> _authState.value = AuthState(error = it.message)
-                    is Resource.Success -> _authState.value = AuthState(isSuccessful = true)
+                    is Resource.Success -> signUserIn(email, password)
                 }
             }
         }

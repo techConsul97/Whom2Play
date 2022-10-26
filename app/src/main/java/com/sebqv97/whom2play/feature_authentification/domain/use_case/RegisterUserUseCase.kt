@@ -6,29 +6,28 @@ import com.sebqv97.whom2play.feature_authentification.domain.repository.AuthRepo
 import com.sebqv97.whom2play.feature_authentification.util.AuthDataValidator
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class RegisterUserUseCase @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val loginUserUseCase: LoginUserUseCase
+    private val authRepository: AuthRepository
 ) {
-    fun registerUser(email: String?, password: String?): Flow<Resource<User>> = flow {
-      //  if (AuthDataValidator.isEmailValid(email) && AuthDataValidator.isValidPassword(password)) {
+    suspend fun registerUser(email: String?, password: String?): Flow<Resource<String>> = flow {
+        if (AuthDataValidator.isEmailValid(email) && AuthDataValidator.isValidPassword(password)) {
             val user = User(email!!, password!!)
-            authRepository.createUser(user).onEach {
+
+            authRepository.createUser(user).collect {
                 when (it) {
                     is Resource.Loading -> emit(Resource.Loading())
                     is Resource.Error -> emit(Resource.Error(it.message!!))
-                    is Resource.Success -> loginUserUseCase.loginUser(email,password)
+                    is Resource.Success -> emit(Resource.Success(it.data!!))
                 }
+
             }
-  //      } else emit(Resource.Error(message = "Check your credentials"))
+
+       } else emit(Resource.Error(message = "Check your credentials"))
 
 
     }
-
-
 
 
 }

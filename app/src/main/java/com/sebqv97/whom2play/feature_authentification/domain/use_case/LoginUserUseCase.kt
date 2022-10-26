@@ -12,16 +12,16 @@ import javax.inject.Inject
 class LoginUserUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    fun loginUser(email: String?, password: String?): Flow<Resource<User>> = flow {
-        //if (AuthDataValidator.isEmailValid(email) && AuthDataValidator.isValidPassword(password)) {
+   suspend fun loginUser(email: String?, password: String?): Flow<Resource<User>> = flow {
+        if (AuthDataValidator.isEmailValid(email) && AuthDataValidator.isValidPassword(password)) {
             val user = User(email!!, password!!)
-            authRepository.loginUser(user).onEach {
+            authRepository.loginUser(user).collect {
                 when (it) {
                     is Resource.Loading -> emit(Resource.Loading())
                     is Resource.Error -> emit(Resource.Error(it.message!!))
                     is Resource.Success -> emit(Resource.Success(data = user))
                 }
             }
-     //   }else emit(Resource.Error(message = "Check your credentials"))
+      }else emit(Resource.Error(message = "Check your credentials"))
     }
 }

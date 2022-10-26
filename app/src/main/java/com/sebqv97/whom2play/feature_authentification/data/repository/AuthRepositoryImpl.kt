@@ -14,11 +14,13 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class AuthRepositoryImpl @Inject constructor(
-    private val firebaseAuth: FirebaseAuth
-) : AuthRepository {
+    private val firebaseAuth: FirebaseAuth,
+
+    ): AuthRepository{
+
 
     override suspend fun createUser(auth: User): Flow<Resource<String>> = callbackFlow {
-        trySend(Resource.Loading())
+        trySend(Resource.Loading<String>())
 
         firebaseAuth.createUserWithEmailAndPassword(auth.email,auth.password).addOnCompleteListener{
             if(it.isSuccessful) {
@@ -26,7 +28,7 @@ class AuthRepositoryImpl @Inject constructor(
                 Log.d("Logged: ", "Current UserID: ${firebaseAuth.currentUser?.uid}")
             }
         }.addOnFailureListener {
-            trySend(Resource.Error<String>("","Login Failed"))
+            trySend(Resource.Error<String>("Login Failed"))
         }
         awaitClose{ close() }
 
@@ -39,11 +41,12 @@ class AuthRepositoryImpl @Inject constructor(
             .addOnCompleteListener {
                 trySend(Resource.Success<String>("Login successful"))
             }.addOnFailureListener {
-                trySend(Resource.Error<String>("Failed to Login"))
+                trySend(Resource.Error<String>("Login Failed"))
             }
         awaitClose{
             close()
         }
 
     }
+
 }
